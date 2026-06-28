@@ -14,22 +14,19 @@ export class UserController {
 
   // GET /user/id
   @Get(':id')
-  getUserById(@Param('id') id: string) {
-    return { id, name: 'John Doe' };
+  getUserById(@Param('id') id: string):unknown {
+    return this.userService.findOneUser(Number(id))
   }
 
   // POST /user
   @Post()
   createUser(@Body() createUserDto: CreateUserDto) {
-    return { data: createUserDto, message: 'User created successfully' };
+    return this.createUser(createUserDto)
   }
 
   // PUT /user/id
   @Put(':id')
-  updateUser(@Param(':id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return {
-      data: { id, ...updateUserDto },
-      message: 'Updated user successfully',
-    };
+  updateUser(@Param(':id') id: string, @Body() updateUserDto: UpdateUserDto):unknown {
+    return this.userService.updateUser(Number(id), updateUserDto)
   }
 }
